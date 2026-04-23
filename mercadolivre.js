@@ -3,8 +3,8 @@ const verMais = document.getElementById('ver-mais');
 
 const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3000'
-  : 'https://seu-backend.railway.app';
-
+  : 'https://aetherx-backend-production.up.railway.app';
+  
 function formatPrice(price) {
   return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
