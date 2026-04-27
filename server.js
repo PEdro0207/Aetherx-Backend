@@ -44,10 +44,10 @@ app.get("/callback", async (req, res) => {
 });
 
 app.get("/api/produtos", async (req, res) => {
-  const cat = req.query.cat || "MLB1648";
+  const query = req.query.q || "notebook";
   try {
     const response = await fetch(
-      `https://api.mercadolibre.com/sites/MLB/search?category=${cat}&limit=8`,
+      `https://api.mercadolibre.com/sites/MLB/search?q=${query}&limit=8`,
       {
         headers: {
           "Authorization": `Bearer ${process.env.ML_TOKEN}`,
