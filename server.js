@@ -31,13 +31,10 @@ app.get("/callback", async (req, res) => {
     });
 
     const data = await response.json();
+    console.log("TOKEN COMPLETO:", JSON.stringify(data));
 
-    // Mostra o token no navegador — copia e salva no Railway
-    res.json({
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      message: "Copie o access_token e adicione no Railway em Variables!"
-    });
+    // Mostra tudo na tela
+    res.json(data);
 
   } catch (err) {
     console.error(err);
