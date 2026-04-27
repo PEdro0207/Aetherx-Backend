@@ -87,17 +87,16 @@ app.get("/api/produtos", async (req, res) => {
     );
 
     const data = await response.json();
-    res.json(data);
+    
+    // Mostra tudo incluindo erros
+    console.log("STATUS:", response.status);
+    console.log("RESPOSTA:", JSON.stringify(data));
+    res.json({ status: response.status, data });
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Erro ao buscar produtos" });
+    res.status(500).json({ error: err.message });
   }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 // Rota de debug — remove depois que funcionar
