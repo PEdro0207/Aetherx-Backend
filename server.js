@@ -99,3 +99,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+// Rota de debug — remove depois que funcionar
+app.get("/debug", (req, res) => {
+  res.json({
+    token_existe: !!process.env.ML_TOKEN,
+    token_inicio: process.env.ML_TOKEN ? process.env.ML_TOKEN.substring(0, 20) : "vazio",
+    refresh_existe: !!process.env.ML_REFRESH_TOKEN
+  });
+});
