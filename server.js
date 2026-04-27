@@ -42,6 +42,35 @@ app.get("/callback", async (req, res) => {
   }
 });
 
+// Função para renovar o token automaticamente
+async function refreshAccessToken() {
+  try {
+    const response = await fetch("https://api.mercadolibre.com/oauth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        client_id: ML_APP_ID,
+        client_secret: ML_SECRET_KEY,
+        refresh_token: process.env.ML_REFRESH_TOKEN
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.access_token) {
+      process.env.ML_TOKEN = data.access_token;
+      process.env.ML_REFRESH_TOKEN = data.refresh_token;
+      console.log("Token renovado com sucesso!");
+    }
+  } catch (err) {
+    console.error("Erro ao renovar token:", err);
+  }
+}
+
+// Renova o token a cada 5 horas (antes de expirar)
+setInterval(refreshAccessToken, 5 * 60 * 60 * 1000);
+
 // Rota de produtos
 app.get("/api/produtos", async (req, res) => {
   const cat = req.query.cat || "MLB1648";
